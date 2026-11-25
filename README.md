@@ -69,4 +69,9 @@ int var = GetLastError(); // Puede ser directamente con KERNEL32$GetLastError()
 ```
 
 ## Más ejemplos
-Aqui estan multiples repositorios que tienen ejemplos de BOF, seguramente algunos los tienes que adaptar para que funcionen con el template de Windows. Aunque también si te las ingenias puedes 
+Aqui estan multiples repositorios que tienen ejemplos de BOF, seguramente algunos los tienes que adaptar para que funcionen con el template de Windows. Aunque también si te las ingenias puedes compilar los ejemplos directamente:
+
+- https://github.com/Ap3x/Beacon-Object-File-Library
+- https://github.com/trustedsec/CS-Situational-Awareness-BOF
+- https://github.com/ajpc500/BOFs
+- https://github.com/chryzsh/redteam-bofs
