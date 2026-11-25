@@ -13,3 +13,60 @@ Para usarlo es necesario que lo compiles en linux con ```make```.
 
 Cuando pases el ejecutable a tu windows, asegurate de que sea en una carpeta que tenga excepción de Windows defender ya que lo tomará como un virus.
 
+## Reglas Para que los BOF funcionen
+Al ser archivos COFF, los BOF siguen ciertas reglas, ya que no se pueden programar como un programa ```.exe``` convencional.
+
+1. No existen variables Globales. Esto es debido a que ciertas secciones de memoria del objeto no deben se usan o no deben existir, a lo que generaran problemas al momento de cargar el ejecutable.
+
+Incorrecto
+```C
+char variableB = 1;
+
+void go()
+{
+    ...
+}
+```
+
+Correcto
+```C
+void go()
+{
+    char variableB = 1;
+}
+```
+
+### <b>Tampoco puedes usar variables staticas ``` static char ```</b> 
+
+2. No puedes usar literales de cadenas. No puedes definir una variable de cadena por medio de un puntero, ejemplo:
+
+Incorrecto
+```C
+char* palabra = "Hola";
+```
+
+Correcto
+```C
+char palabra[5] = {'H', 'o', 'l', 'a', 0}; 
+```
+
+3. No puedes hacer llamada de funciones a WinAPI a través de inclusiones estandar. Estas se declaran por una macro que generan en el template, pero no hace la llamada directamente a la API.
+
+
+Incorrecto
+```c
+int var = GetLastError();
+```
+
+Correcto
+```c
+DFR(KERNEL32, GetLastError); // Dependiendo donde lo uses puede ser DFR_LOCAL
+#define GetLastError KERNEL32$GetLastError
+...
+
+int var = GetLastError(); // Puede ser directamente con KERNEL32$GetLastError()
+
+```
+
+## Más ejemplos
+Aqui estan multiples repositorios que tienen ejemplos de BOF, seguramente algunos los tienes que adaptar para que funcionen con el template de Windows. Aunque también si te las ingenias puedes 
